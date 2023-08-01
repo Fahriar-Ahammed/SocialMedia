@@ -11,21 +11,26 @@ class PostComment extends Model
 {
     use HasFactory;
 
-    public function User():BelongsTo
+    public function user():BelongsTo
     {
         return $this->belongsTo(User::class,'user_id','id')
             ->select('id','name');
     }
 
-    public function Replies():HasMany
+    public function replies():HasMany
     {
         return $this->hasMany(PostComment::class,'parent_id')
             ->select('id','parent_id','comment')
-            ->with('Replies');
+            ->with('replies');
     }
 
-    public function Likes():HasMany
+    public function likes():HasMany
     {
         return $this->hasMany(CommentLike::class,'comment_id');
+    }
+
+    public function mentions():HasMany
+    {
+        return $this->hasMany(CommentMentions::class,'comment_id');
     }
 }

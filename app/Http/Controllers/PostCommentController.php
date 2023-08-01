@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CommentMentions;
 use App\Models\PostComment;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -14,8 +15,8 @@ class PostCommentController extends Controller
     {
         return response()->json(PostComment::where('post_id', $id)
             ->select('id', 'user_id', 'comment')
-            ->with('User','Replies')
-            ->withCount('Likes')
+            ->with('user','replies','mentions')
+            ->withCount('likes')
             ->get(), 200);
     }
 
@@ -58,6 +59,16 @@ class PostCommentController extends Controller
         $data->post_id = $request->post_id;
         $data->comment = $request->comment;
         $data->save();
+
+        if ($request->mentions) {
+            $mentionsData = json_decode($request->mentions, true);
+            foreach ($mentionsData as  $mention) {
+                $postPhotos = new CommentMentions();;
+                $postPhotos->comment_id = $data->id;
+                $postPhotos->user_id = $mention['user_id'];
+                $postPhotos->save();
+            }
+        }
 
         return response()->json(['status' => 'success'], 200);
     }

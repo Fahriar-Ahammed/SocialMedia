@@ -11,22 +11,23 @@ class Post extends Model
 {
     use HasFactory;
 
-    public function User():BelongsTo
+    public function user():BelongsTo
     {
         return $this->belongsTo(User::class,'user_id','id');
     }
 
-    public function Photos(): HasMany
+    public function photos(): HasMany
     {
         return $this->hasMany(PostPhotos::class, 'post_id');
     }
 
-    public function Likes(): HasMany
+    public function likes(): HasMany
     {
-        return $this->hasMany(PostLike::class, 'post_id');
+        return $this->hasMany(PostLike::class, 'post_id')
+            ->select('post_id','user_id');
     }
 
-    public function Comments(): HasMany
+    public function comments(): HasMany
     {
         return $this->hasMany(PostComment::class, 'post_id')
             ->whereNull('parent_id');

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\CommentLike;
+use App\Models\CommentMentions;
 use App\Models\Post;
 use App\Models\PostComment;
 use App\Models\PostLike;
@@ -24,5 +25,6 @@ class DatabaseSeeder extends Seeder
         PostComment::factory(20)->create();
         PostLike::factory(20)->create();
         CommentLike::factory(20)->create();
+        CommentMentions::factory(20)->create();
     }
 }

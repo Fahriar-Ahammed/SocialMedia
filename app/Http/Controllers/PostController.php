@@ -13,8 +13,8 @@ class PostController extends Controller
     public function index()
     {
         return response()->json(
-            Post::with('User', 'Photos', 'Likes')
-                ->withCount('Comments','Likes')
+            Post::with('user', 'photos', 'likes')
+                ->withCount('comments','likes')
                 ->latest()->paginate(10)
             ,200);
     }

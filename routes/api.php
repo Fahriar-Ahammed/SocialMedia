@@ -33,7 +33,7 @@ group(function () {
 Route::controller(PostController::class)->
 prefix('post')->
 group(function () {
-    Route::get('/all','index');
+    Route::get('/index','index');
     Route::get('/own','ownPost');
     Route::post('/create', 'create');
     Route::get('/show/{id}', 'show');
