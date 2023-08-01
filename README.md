@@ -7,7 +7,7 @@ Mainly focused on the multi level comments and mentions.
 
 use the bellow command to seed demo data according the factory
 ```
-php artisan mgrate:refresh --seed
+php artisan migrate:refresh --seed
 ```
 
 Add some nested parent id for testing.
