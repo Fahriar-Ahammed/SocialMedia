@@ -19,8 +19,8 @@ Add some nested parent id for testing.
 
 - Mentions Part
     -
-  - /api/comments/user/{data}'
-    <br>using the api we can username by letter and store the selected name into an arrayList.
+  - /api/comments/user/{data}
+    <br>using the api we can get users by letter and store the selected name into an arrayList.
   - After that the users arrayList needs to send as a json array with the comment.
   
 
