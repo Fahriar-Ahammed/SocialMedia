@@ -4,43 +4,43 @@ namespace App\Http\Controllers;
 
 use App\Models\PostLike;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostLikeController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        return PostLike::all();
+        return response()->json(
+            PostLike::where('post_id',$id)
+                ->with('user')
+                ->latest()->get()
+        );
     }
 
-    public function store(Request $request)
+    public function giveLike($id)
     {
-        $request->validate([
+        $checking = PostLike::where('post_id',$id)
+            ->where('user_id',Auth::id())
+            ->first();
+        if (!$checking){
+            $data = new PostLike();
+            $data->user_id = Auth::id();
+            $data->post_id = $id;
+            $data->save();
+        }
 
-        ]);
-
-        return PostLike::create($request->validated());
+        return response()->json(['status' => 'success'], 200);
     }
 
-    public function show(PostLike $postLike)
+
+    public function removeLike($id)
     {
-        return $postLike;
-    }
-
-    public function update(Request $request, PostLike $postLike)
-    {
-        $request->validate([
-
-        ]);
-
-        $postLike->update($request->validated());
-
-        return $postLike;
-    }
-
-    public function destroy(PostLike $postLike)
-    {
-        $postLike->delete();
-
-        return response()->json();
+        $checking = PostLike::where('post_id',$id)
+            ->where('user_id',Auth::id())
+            ->first();
+        if ($checking){
+            $checking->delete();
+        }
+        return response()->json(['status' => 'success'], 200);
     }
 }

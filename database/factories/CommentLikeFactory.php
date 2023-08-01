@@ -2,20 +2,21 @@
 
 namespace Database\Factories;
 
-use App\Models\Post;
-use App\Models\PostPhotos;
+use App\Models\CommentLike;
+use App\Models\PostComment;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class PostPhotosFactory extends Factory
+class CommentLikeFactory extends Factory
 {
-    protected $model = PostPhotos::class;
+    protected $model = CommentLike::class;
 
     public function definition(): array
     {
         return [
-            'post_id' => Post::get()->random()->id,
-            'photo_url' => fake()->imageUrl,
+            'user_id' => User::get()->random()->id,
+            'comment_id' => PostComment::get()->random()->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
